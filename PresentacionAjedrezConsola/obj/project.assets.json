@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "AjedrezLogica/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/AjedrezLogica.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AjedrezLogica.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "AjedrezLogica/1.0.0": {
+      "type": "project",
+      "path": "../AjedrezLogica/AjedrezLogica.csproj",
+      "msbuildProject": "../AjedrezLogica/AjedrezLogica.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "AjedrezLogica >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\nicot\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\AjedrezLogica\\AjedrezLogica.csproj": {
+              "projectPath": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\AjedrezLogica\\AjedrezLogica.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

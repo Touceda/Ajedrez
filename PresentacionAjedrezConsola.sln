@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionAjedrezConsola", "PresentacionAjedrezConsola\PresentacionAjedrezConsola.csproj", "{1C37D8CF-E8E8-4838-8086-CD5C6ABB3EB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentacionAjedrezConsola", "PresentacionAjedrezConsola\PresentacionAjedrezConsola.csproj", "{1C37D8CF-E8E8-4838-8086-CD5C6ABB3EB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionAjedrezWindowsForms", "PresentacionAjedrezWindowsForms\PresentacionAjedrezWindowsForms.csproj", "{8635C5C4-91BB-4FFF-A59B-4F9A18EF4A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentacionAjedrezWindowsForms", "PresentacionAjedrezWindowsForms\PresentacionAjedrezWindowsForms.csproj", "{8635C5C4-91BB-4FFF-A59B-4F9A18EF4A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjedrezLogica", "AjedrezLogica\AjedrezLogica.csproj", "{AFDF117B-ABBB-4C83-995D-1E5C303C78A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AjedrezLogica", "AjedrezLogica\AjedrezLogica.csproj", "{AFDF117B-ABBB-4C83-995D-1E5C303C78A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLajedrez", "SQLajedrez\SQLajedrez.csproj", "{02CB0742-83D8-4DA5-ACA9-E73B0B3F3298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLajedrez", "SQLajedrez\SQLajedrez.csproj", "{02CB0742-83D8-4DA5-ACA9-E73B0B3F3298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
