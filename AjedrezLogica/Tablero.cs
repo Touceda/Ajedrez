@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AjedrezLogica
 {
-    static class Tablero
+    class Tablero
     {
 
-        //Crea un tablero vacio con espacios
-        public static EspacioTablero[,] CrearTablero()
+
+        public static EspacioTablero[,] ActualizarTablero(List<Ficha> JugadorBlanco, List<Ficha> JugadorNegro)
         {
             EspacioTablero[,] tablero = new EspacioTablero[8, 8];
 
@@ -22,30 +22,46 @@ namespace AjedrezLogica
                 }
             }
 
-            return tablero;
-        }
-
-
-        public static EspacioTablero[,] RellenarTablero(EspacioTablero[,] tablero, List<Ficha> JugadorBlanco, List<Ficha> JugadorNegro)
-        {
-            EspacioTablero[,] tab = tablero;
-
             foreach (var ficha in JugadorBlanco)
             {
-                tab[ficha.PosX, ficha.PosY].MiFicha = ficha;
-                tab[ficha.PosX, ficha.PosY].IsOcuped = true;
+                tablero[ficha.PosX, ficha.PosY].MiFicha = ficha;
+                tablero[ficha.PosX, ficha.PosY].IsOcuped = true;
             }
 
             foreach (var ficha in JugadorNegro)
             {
-                tab[ficha.PosX, ficha.PosY].MiFicha = ficha;
-                tab[ficha.PosX, ficha.PosY].IsOcuped = true;
+                tablero[ficha.PosX, ficha.PosY].MiFicha = ficha;
+                tablero[ficha.PosX, ficha.PosY].IsOcuped = true;
             }
 
-            return tab;
+            return tablero;
         }
 
-
+        public static int ConvertStringToInt(string yCordenada)
+        {
+            int y;
+            switch (yCordenada)
+            {
+                case "A": { y = 0; break; }
+                case "a": { y = 0; break; }
+                case "B": { y = 1; break; }
+                case "b": { y = 1; break; }
+                case "C": { y = 2; break; }
+                case "c": { y = 2; break; }
+                case "D": { y = 3; break; }
+                case "d": { y = 3; break; }
+                case "E": { y = 4; break; }
+                case "e": { y = 4; break; }
+                case "F": { y = 5; break; }
+                case "f": { y = 5; break; }
+                case "G": { y = 6; break; }
+                case "g": { y = 6; break; }
+                case "H": { y = 7; break; }
+                case "h": { y = 7; break; }
+                default: return -1;
+            }
+            return y;
+        }
 
 
     }

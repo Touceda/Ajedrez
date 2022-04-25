@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\SQLajedrez\\SQLajedrez.csproj": {}
+    "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\SQLajedrez\\SQLajedrez.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\SQLajedrez\\SQLajedrez.csproj": {
+    "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\SQLajedrez\\SQLajedrez.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\SQLajedrez\\SQLajedrez.csproj",
+        "projectUniqueName": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\SQLajedrez\\SQLajedrez.csproj",
         "projectName": "SQLajedrez",
-        "projectPath": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\SQLajedrez\\SQLajedrez.csproj",
+        "projectPath": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\SQLajedrez\\SQLajedrez.csproj",
         "packagesPath": "C:\\Users\\nicot\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\SQLajedrez\\obj\\",
+        "outputPath": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\SQLajedrez\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

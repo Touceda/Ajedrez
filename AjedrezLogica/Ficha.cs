@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AjedrezLogica
 {
-    public class Ficha
+    public abstract class Ficha
     {
         private string nombre;
         public string Nombre { get { return nombre; } set { nombre = value; } }
@@ -18,13 +18,9 @@ namespace AjedrezLogica
         public int PosY { get { return y; } set { y = value; } }
 
 
-
-        public Ficha(int x, int y, string pColor)
-        {
-            this.PosX = x;
-            this.PosY = y;
-            this.color = pColor;
-        }
+        public abstract bool ComprobarMovimiento(int x, int y); //DeMomentoNada
+        public abstract bool Mover(int x, int y);
+        
 
     }
 
@@ -40,15 +36,30 @@ namespace AjedrezLogica
 
 
 
-        public Peon(int x, int y, string color) : base(x, y, color)
+        public Peon(int pX, int pY, string pColor)
+        {
+            this.PosX = pX;
+            this.PosY = pY;
+            this.Nombre = "P" + pColor.ToString();
+            this.Color = pColor;
+          
+        }
+
+        public override bool ComprobarMovimiento(int x, int y)
+        {
+            if (x <= 7 && x <= 0 && y <= 7 && y <= 0) 
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override bool Mover(int x, int y)
         {
             this.PosX = x;
             this.PosY = y;
-            this.Color = color;
-            this.Nombre = "P" + color.ToString();
+            return true;
         }
-
-
     }
 
 

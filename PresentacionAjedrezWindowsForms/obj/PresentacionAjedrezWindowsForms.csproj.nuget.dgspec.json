@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj": {}
+    "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj": {
+    "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj",
+        "projectUniqueName": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj",
         "projectName": "PresentacionAjedrezWindowsForms",
-        "projectPath": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj",
+        "projectPath": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\PresentacionAjedrezWindowsForms\\PresentacionAjedrezWindowsForms.csproj",
         "packagesPath": "C:\\Users\\nicot\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicot\\Desktop\\Ajedrez\\PresentacionAjedrezConsola\\PresentacionAjedrezWindowsForms\\obj\\",
+        "outputPath": "C:\\Users\\nicot\\Desktop\\Repaso Programacion\\Ajedrez\\PresentacionAjedrezWindowsForms\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
