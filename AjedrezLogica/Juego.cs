@@ -8,19 +8,20 @@ namespace AjedrezLogica
 {
     public class Juego
     {
-        public Jugador jugador1; //Configurar para que sea el Blanco ??????????????????????????????????
-        public Jugador jugador2;//Configurar para que sea el negro ???????????????????????????
+        public Jugador JugadorBlanco; //Configurar para que sea el Blanco ??????????????????????????????????
+        public Jugador JugadorNegro;//Configurar para que sea el negro ???????????????????????????
         public bool BlackTurn;
         private EspacioTablero[,] tablero;
         public EspacioTablero[,] MiTablero { get { return tablero; }set { tablero = value; } }
+        public string HayGanador = "no";
 
 
         public Juego()
         {
-            jugador1 = new Jugador("Nicolas",false);//Modificar a la capa de consola, pasar nombre y quien es blanco
-            jugador2 = new Jugador("Bautista", true);//Modificar a la capa de consola, pasar nombre y quien es blanco
+            JugadorBlanco = new Jugador("Nicolas",false);//Modificar a la capa de consola, pasar nombre y quien es blanco
+            JugadorNegro = new Jugador("Bautista", true);//Modificar a la capa de consola, pasar nombre y quien es blanco
             BlackTurn = false;
-            this.MiTablero = Tablero.ActualizarTablero(jugador1.MisFichas,jugador2.MisFichas);
+            this.MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas,JugadorNegro.MisFichas);
         }
 
 
@@ -49,15 +50,15 @@ namespace AjedrezLogica
 
             if (BlackTurn)
             {
-                jugador2.FichaSeleccionada = fichaSeleccionada;
-                return jugador2.SeleccionarFicha();
+                JugadorNegro.FichaSeleccionada = fichaSeleccionada;
+                return JugadorNegro.SeleccionarFicha();
             }
             else
             {
-                jugador1.FichaSeleccionada = fichaSeleccionada;
-                return jugador1.SeleccionarFicha();
+                JugadorBlanco.FichaSeleccionada = fichaSeleccionada;
+                return JugadorBlanco.SeleccionarFicha();
             }
-        }
+        } //Compruebo que seleccione una ficha de forma correcta
 
         public bool ComprobarMovimientoConsola(string ficha)
         {
@@ -76,21 +77,36 @@ namespace AjedrezLogica
             bool isTrue;
             if (BlackTurn)
             {
-               isTrue = jugador2.MoverFicha(x,y);
+               isTrue = JugadorNegro.MoverFicha(x,y,JugadorBlanco.MisFichas);
+                if (isTrue && JugadorNegro.comificha)
+                {
+                    Ficha fichaMuerta = JugadorNegro.UltimaFichaComida;
+                    JugadorNegro.comificha = false;
+                    JugadorBlanco.MatarFicha(fichaMuerta);
+
+                }
             }
             else
             {
-                isTrue = jugador1.MoverFicha(x,y);
+                isTrue = JugadorBlanco.MoverFicha(x,y,JugadorNegro.MisFichas);
+                if (isTrue && JugadorBlanco.comificha)
+                {
+                    Ficha fichaMuerta = JugadorBlanco.UltimaFichaComida;
+                    JugadorBlanco.comificha = false;
+                    JugadorNegro.MatarFicha(fichaMuerta);
+                }           
             }
+
+
 
             if (isTrue)
             {
-                MiTablero = Tablero.ActualizarTablero(jugador1.MisFichas, jugador2.MisFichas);
+                MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas, JugadorNegro.MisFichas);
                 BlackTurn = !BlackTurn;
             }
 
             return isTrue;
-        }
+        } //Compruebo si el movimineto es correcto
 
 
 

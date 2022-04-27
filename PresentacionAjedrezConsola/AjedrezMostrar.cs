@@ -17,8 +17,16 @@ namespace PresentacionAjedrezConsola
         {
             Juego = new Juego();
             ImprimirTablero(Juego.MiTablero);
-            SeleccionarFicha();
+            LoopGame();
         }
+
+
+        private void LoopGame()
+        {
+            while (Juego.HayGanador == "no") { SeleccionarFicha(); }      
+        }
+
+
 
         public void TurnoDe()
         {
@@ -27,12 +35,12 @@ namespace PresentacionAjedrezConsola
             if (this.Juego.BlackTurn)
             {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("Turno De:  " +this.Juego.jugador2.Nombre.ToString());
+                Console.WriteLine("Turno De:  " +this.Juego.JugadorNegro.Nombre.ToString());
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Turno De:  " +this.Juego.jugador1.Nombre.ToString());
+                Console.WriteLine("Turno De:  " +this.Juego.JugadorBlanco.Nombre.ToString());
             }
 
             Console.WriteLine();
@@ -96,19 +104,6 @@ namespace PresentacionAjedrezConsola
                 }
                 Console.WriteLine();
             }
-
-                
-            
-
-
-
-
-
-
-
-
-
-
         }
         
 
@@ -155,9 +150,13 @@ namespace PresentacionAjedrezConsola
                 ImprimirTablero(Juego.MiTablero);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("Ficha Seleccionada:  " + ficha.ToString());
+                Console.WriteLine("Ficha Seleccionada:  " + ficha.ToString() + "    Escriba ''ESC'' Para seleccionar otra ficha.");
                 Console.WriteLine("Seleccione a donde se quiere mover: ");
                 string moverficha = Console.ReadLine();
+                if (moverficha == "ESC" || moverficha == "esc" || moverficha == "Esc") 
+                {
+                    return;
+                }
                 moverficha = moverficha[0].ToString() + moverficha[1].ToString();
 
 
@@ -178,7 +177,7 @@ namespace PresentacionAjedrezConsola
                 Console.WriteLine("Error al Mover la ficha, Precione Enter para reiniciar Turno");
                 Console.ReadLine();
                 ImprimirTablero(this.Juego.MiTablero);
-                SeleccionarFicha();
+                AdondeMover(ficha);
             }
 
         }//Selecciono el movimiento y veo si esta bien
@@ -196,6 +195,7 @@ namespace PresentacionAjedrezConsola
         {
             Console.Clear();
             Console.WriteLine("Error al Mover ficha, Precione Enter para reiniciar Movimiento");
+            Console.ReadLine();
             AdondeMover(ficha);
         }
 

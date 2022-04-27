@@ -16,6 +16,8 @@ namespace AjedrezLogica
 
         List<Ficha> Fichas = new List<Ficha> ();
         public List<Ficha> MisFichas { get { return Fichas; } }
+        List<Ficha> FichasMuertas = new List<Ficha>();
+        public List<Ficha> MisFichasMuertas { get { return FichasMuertas; } }
 
         private Ficha fichaseleccionada;
         public Ficha FichaSeleccionada { get { return fichaseleccionada; } set { fichaseleccionada = value; } }
@@ -36,8 +38,10 @@ namespace AjedrezLogica
             
         }
 
+        public Ficha UltimaFichaComida;
+        public bool comificha = false;
 
-        public void JugarTurno()
+        public void JugarTurno()//nada de momento
         { 
         
         
@@ -58,21 +62,36 @@ namespace AjedrezLogica
             return false;
         }
 
-        public bool MoverFicha(int x, int y)
+        public bool MoverFicha(int x, int y, List<Ficha> fichasEnemigas)
         {
-            foreach (var f in MisFichas)
+            bool moviFicha = false;
+            foreach (var f in MisFichas) // Busco la ficha
             {
-                if (f == fichaseleccionada)
+                if (f == fichaseleccionada) //La selecciono
                 {
-                    return f.Mover(x,y);
+                    if (f.MoverFicha(x, y, fichasEnemigas)) //La muevo, si da true se movio con exito, si da false no se movio
+                    {
+                        moviFicha = true;
+                        if (f.comi)//Si se movio, compruebo si comio o no
+                        {
+                            f.comi = false;
+                            this.comificha = true;
+                            UltimaFichaComida = f.FichaEnemigaComida;
+                        }
+                        
+                    }                                    
                 }
             }
-            return false;
+            return moviFicha;
         }
 
-        
 
 
+        public void MatarFicha(Ficha FichaMuerta)
+        {
+            Fichas.Remove(FichaMuerta);
+            FichasMuertas.Add(FichaMuerta);       
+        }
 
         public void CrearFichas()
         {
