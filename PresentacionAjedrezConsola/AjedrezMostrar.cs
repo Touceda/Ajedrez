@@ -32,15 +32,15 @@ namespace PresentacionAjedrezConsola
         {
         
 
-            if (this.Juego.BlackTurn)
+            if (this.Juego.WhiteTurn)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("Turno De:  " +this.Juego.JugadorNegro.Nombre.ToString());
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Turno De:  " + this.Juego.JugadorBlanco.Nombre.ToString());
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Turno De:  " +this.Juego.JugadorBlanco.Nombre.ToString());
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("Turno De:  " + this.Juego.JugadorNegro.Nombre.ToString());
             }
 
             Console.WriteLine();
@@ -114,7 +114,7 @@ namespace PresentacionAjedrezConsola
                 string ficha = "";
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("Ejemplo 3B");
+                Console.WriteLine("Ejemplo De Formato ''3B''");
                 Console.WriteLine("Seleccione la ficha para mover: ");
                 ficha = Console.ReadLine();
                 ficha = ficha[0].ToString() + ficha[1].ToString();
@@ -141,6 +141,15 @@ namespace PresentacionAjedrezConsola
             }
             
         } //Selecciono la ficha y compruebo que este bien
+
+        public void ErrorReinicioDeSeleccion()
+        {
+            Console.Clear();
+            Console.WriteLine("Error al seleccionar ficha, Precione Enter para reiniciar Turno");
+            Console.ReadLine();
+            ImprimirTablero(this.Juego.MiTablero);
+            SeleccionarFicha();
+        }
 
         public void AdondeMover(string ficha)
         {
@@ -182,15 +191,6 @@ namespace PresentacionAjedrezConsola
 
         }//Selecciono el movimiento y veo si esta bien
 
-
-        public void ErrorReinicioDeSeleccion()
-        {
-            Console.Clear();
-            Console.WriteLine("Error al seleccionar ficha, Precione Enter para reiniciar Turno");
-            Console.ReadLine();
-            ImprimirTablero(this.Juego.MiTablero);
-            SeleccionarFicha();
-        }
         public void ErrorReinicioDeMovimiento(string ficha)
         {
             Console.Clear();
@@ -200,11 +200,14 @@ namespace PresentacionAjedrezConsola
         }
 
 
-    
 
 
-     
-        
+
+
+
+
+
+
 
 
     }

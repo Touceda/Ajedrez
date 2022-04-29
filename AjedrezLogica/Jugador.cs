@@ -16,8 +16,9 @@ namespace AjedrezLogica
 
         List<Ficha> Fichas = new List<Ficha> ();
         public List<Ficha> MisFichas { get { return Fichas; } }
-        List<Ficha> FichasMuertas = new List<Ficha>();
-        public List<Ficha> MisFichasMuertas { get { return FichasMuertas; } }
+
+        List<Ficha> fichasComidas = new List<Ficha>();
+        public List<Ficha> FichasComidas { get { return fichasComidas; } }
 
         private Ficha fichaseleccionada;
         public Ficha FichaSeleccionada { get { return fichaseleccionada; } set { fichaseleccionada = value; } }
@@ -26,74 +27,59 @@ namespace AjedrezLogica
         {
             this.Nombre = pNombre;
             this.isblack = pIsblack;
-
-            if (this.IsBlack)
-            {
-                CrearFichas();
-            }
-            else
-            {
-                CrearFichas();
-            }
-            
+            CrearFichas();      
         }
-
-        public Ficha UltimaFichaComida;
-        public bool comificha = false;
-
-        public void JugarTurno()//nada de momento
-        { 
-        
-        
-        
-        
-        
-        }
-
-        public bool SeleccionarFicha()
+       
+       
+        public bool SeleccionarFicha(int x, int y)
         {
-            foreach (var f in MisFichas)
+            foreach (var ficha in MisFichas)
             {
-                if (f == fichaseleccionada) 
+                if (ficha.PosX == x && ficha.PosY == y)  
                 {
+                    this.fichaseleccionada = ficha;
                     return true;
                 }
             }
             return false;
         }
 
-        public bool MoverFicha(int x, int y, List<Ficha> fichasEnemigas)
+        public bool MoverFicha(int x, int y, List<Ficha> fichasEnemigas, EspacioTablero[,] tab)
         {
             bool moviFicha = false;
-            foreach (var f in MisFichas) // Busco la ficha
+            foreach (var ficha in MisFichas) // recorro las fichas
             {
-                if (f == fichaseleccionada) //La selecciono
+                if (ficha == fichaseleccionada) //Selecciono la ficha que se tiene que mover
                 {
-                    if (f.MoverFicha(x, y, fichasEnemigas)) //La muevo, si da true se movio con exito, si da false no se movio
+                    if (ficha.MoverFicha(x, y, fichasEnemigas,tab)) //La mando a mover, Si da true, Se movio, Si da false el movimiento no era correcto
                     {
                         moviFicha = true;
-                        if (f.comi)//Si se movio, compruebo si comio o no
-                        {
-                            f.comi = false;
-                            this.comificha = true;
-                            UltimaFichaComida = f.FichaEnemigaComida;
-                        }
-                        
+                        ComprobarSiComiFicha(ficha); //Si se movio compruebo si comi o no                        
                     }                                    
                 }
             }
             return moviFicha;
         }
 
-
+        public bool comiFicha = false;
+        public Ficha UltimaFichaComida;
+        private void ComprobarSiComiFicha(Ficha ficha)
+        {
+            if (ficha.ComiFicha)
+            {
+                ficha.ComiFicha = false;
+                this.FichasComidas.Add(ficha.FichaEnemigaComida);
+                this.comiFicha = true;
+                this.UltimaFichaComida = ficha.FichaEnemigaComida;
+            }
+        }
 
         public void MatarFicha(Ficha FichaMuerta)
         {
             Fichas.Remove(FichaMuerta);
-            FichasMuertas.Add(FichaMuerta);       
         }
 
-        public void CrearFichas()
+        private void CrearFichas()
         {
             if (isblack)
             {
@@ -105,6 +91,8 @@ namespace AjedrezLogica
                 Fichas.Add(new Peon(6, 5, "N"));
                 Fichas.Add(new Peon(6, 6, "N"));
                 Fichas.Add(new Peon(6, 7, "N"));
+
+                Fichas.Add(new Rey(7, 4, "N"));
                 return;
             }
 
@@ -116,6 +104,8 @@ namespace AjedrezLogica
             Fichas.Add(new Peon(1, 5, "B"));
             Fichas.Add(new Peon(1, 6, "B"));
             Fichas.Add(new Peon(1, 7, "B"));
+
+            Fichas.Add(new Rey(0, 4, "B"));
         }
     }
 }

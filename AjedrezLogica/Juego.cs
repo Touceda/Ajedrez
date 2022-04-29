@@ -10,7 +10,8 @@ namespace AjedrezLogica
     {
         public Jugador JugadorBlanco; //Configurar para que sea el Blanco ??????????????????????????????????
         public Jugador JugadorNegro;//Configurar para que sea el negro ???????????????????????????
-        public bool BlackTurn;
+        private bool whiteturn;
+        public bool WhiteTurn { get { return whiteturn; } } /*set { whiteturn = value; } }*/
         private EspacioTablero[,] tablero;
         public EspacioTablero[,] MiTablero { get { return tablero; }set { tablero = value; } }
         public string HayGanador = "no";
@@ -20,7 +21,7 @@ namespace AjedrezLogica
         {
             JugadorBlanco = new Jugador("Nicolas",false);//Modificar a la capa de consola, pasar nombre y quien es blanco
             JugadorNegro = new Jugador("Bautista", true);//Modificar a la capa de consola, pasar nombre y quien es blanco
-            BlackTurn = false;
+            whiteturn = true;
             this.MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas,JugadorNegro.MisFichas);
         }
 
@@ -41,22 +42,20 @@ namespace AjedrezLogica
                 return false;
             }
 
-            Ficha fichaSeleccionada = MiTablero[x, y].MiFicha;
+            //Ficha fichaSeleccionada = MiTablero[x, y].MiFicha;
 
-            if (fichaSeleccionada == null) //Si no hay ficha en la posicion devuelvo falso para reiniciar el tablero
-            {
-                return false;
-            }
+            //if (fichaSeleccionada == null) //Si no hay ficha en la posicion devuelvo falso para reiniciar el tablero
+            //{
+            //    return false;
+            //}
 
-            if (BlackTurn)
+            if (this.WhiteTurn)
             {
-                JugadorNegro.FichaSeleccionada = fichaSeleccionada;
-                return JugadorNegro.SeleccionarFicha();
+                return JugadorBlanco.SeleccionarFicha(x, y);
             }
             else
             {
-                JugadorBlanco.FichaSeleccionada = fichaSeleccionada;
-                return JugadorBlanco.SeleccionarFicha();
+                return JugadorNegro.SeleccionarFicha(x, y);
             }
         } //Compruebo que seleccione una ficha de forma correcta
 
@@ -75,26 +74,15 @@ namespace AjedrezLogica
             }
 
             bool isTrue;
-            if (BlackTurn)
+            if (this.WhiteTurn)
             {
-               isTrue = JugadorNegro.MoverFicha(x,y,JugadorBlanco.MisFichas);
-                if (isTrue && JugadorNegro.comificha)
-                {
-                    Ficha fichaMuerta = JugadorNegro.UltimaFichaComida;
-                    JugadorNegro.comificha = false;
-                    JugadorBlanco.MatarFicha(fichaMuerta);
-
-                }
+                isTrue = JugadorBlanco.MoverFicha(x, y, JugadorNegro.MisFichas,this.MiTablero);
+                ComprobarSiComiFicha(isTrue);
             }
             else
             {
-                isTrue = JugadorBlanco.MoverFicha(x,y,JugadorNegro.MisFichas);
-                if (isTrue && JugadorBlanco.comificha)
-                {
-                    Ficha fichaMuerta = JugadorBlanco.UltimaFichaComida;
-                    JugadorBlanco.comificha = false;
-                    JugadorNegro.MatarFicha(fichaMuerta);
-                }           
+                isTrue = JugadorNegro.MoverFicha(x, y, JugadorBlanco.MisFichas,this.MiTablero);
+                ComprobarSiComiFicha(isTrue);
             }
 
 
@@ -102,13 +90,36 @@ namespace AjedrezLogica
             if (isTrue)
             {
                 MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas, JugadorNegro.MisFichas);
-                BlackTurn = !BlackTurn;
+                this.whiteturn = !whiteturn;
             }
 
             return isTrue;
         } //Compruebo si el movimineto es correcto
 
+        private void ComprobarSiComiFicha(bool movimientoRealizado)
+        {
+            if (this.WhiteTurn)
+            {
 
+                if (movimientoRealizado && JugadorBlanco.comiFicha)
+                {
+                    Ficha fichaMuerta = JugadorBlanco.UltimaFichaComida;
+                    JugadorBlanco.comiFicha = false;
+                    JugadorNegro.MatarFicha(fichaMuerta);
+                }
+            }
+
+            if (WhiteTurn == false)
+            {
+                if (movimientoRealizado && JugadorNegro.comiFicha)
+                {
+                    Ficha fichaMuerta = JugadorNegro.UltimaFichaComida;
+                    JugadorNegro.comiFicha = false;
+                    JugadorBlanco.MatarFicha(fichaMuerta);
+
+                }
+            }
+        }
 
 
 

@@ -19,13 +19,16 @@ namespace AjedrezLogica
 
         private Ficha fichaenemigacomida;
         public Ficha FichaEnemigaComida { get { return fichaenemigacomida; } set { fichaenemigacomida = value; } }
-        public bool comi;
+
+        private bool comificha;
+        public bool ComiFicha { get { return comificha; } set { comificha = value; } }
 
 
 
-
-        public abstract bool MoverFicha(int x, int y, List<Ficha> FichasEnemigas);
+        public abstract void CalcularMovimientosPosibles();
+        public abstract bool MoverFicha(int x, int y, List<Ficha> FichasEnemigas, EspacioTablero[,] tab);
         public abstract bool ComprobarMovimiento(); //DeMomentoNada
+        public abstract bool ComprobarSiComi();
         public abstract void Mover();
         
 
@@ -34,16 +37,8 @@ namespace AjedrezLogica
 
     public class Peon:Ficha
     {
-        string[] PosiblesMovimientos;
-        
+        private string[] PosiblesMovimientos;       
         private bool firstmovement = true;
-        //public string nombre = "PB";
-        //private int x;
-        //public int PosX { get { return x; } set { x = value; } }
-        //private int y;
-        //public int PosY { get { return y; } set { y = value; } }
-
-
 
         public Peon(int pX, int pY, string pColor)
         {
@@ -51,11 +46,11 @@ namespace AjedrezLogica
             this.PosY = pY;
             this.Nombre = "P" + pColor.ToString();
             this.Color = pColor;
-            this.comi = false;
+            this.ComiFicha = false;
             CalcularMovimientosPosibles();
         }
 
-        private void CalcularMovimientosPosibles() //Calculo todos los movimientos posibles
+        public override void CalcularMovimientosPosibles() //Calculo todos los movimientos posibles
         {
             int posiblex = this.PosX;
             int posibley = this.PosY;
@@ -127,41 +122,35 @@ namespace AjedrezLogica
 
 
 
-
+        EspacioTablero[,] Tablero;
         List<Ficha> FichasEnemigas;
         int movaX;
         int movaY;
 
-        public override bool MoverFicha(int x, int y, List<Ficha> Fichasenemigas)
+        public override bool MoverFicha(int x, int y, List<Ficha> Fichasenemigas, EspacioTablero[,] tab)
         {
+            this.Tablero = tab;
             this.FichasEnemigas = Fichasenemigas;
             this.movaX = x;
             this.movaY = y;
 
-            return ComprobarMovimiento(); //Si el movimiento es correcto Muevo
+            if (ComprobarMovimiento())//Compruebo si el movimiento es correcto
+            {
+                Mover();
+                return true;
+            }
 
+
+            return false;
         }
 
         public override bool ComprobarMovimiento()
         {
-            bool MovimientoEsPosible = false;
             if (movaX < 0 || movaX > 7 || movaY < 0 || movaY > 7) //Si se cumple alguna condicion, significa que salgo del tablero, Reinicio Movimiento
             {
                 return false;
             }
 
-            MovimientoEsPosible = MovimientoComprobado();
-
-            if (MovimientoEsPosible) //Realizo el movimiento
-            {
-                Mover();
-            }
-
-            return MovimientoEsPosible;
-        }
-
-        private bool MovimientoComprobado() //Busco si mi movimiento esta dentro de los posibles
-        {
             string mov = movaX.ToString() + movaY.ToString();
 
             foreach (var pos in PosiblesMovimientos)
@@ -181,6 +170,8 @@ namespace AjedrezLogica
             }
             return false; //No se encontro movimiento 
         }
+
+
 
         //private bool ComprobarMovimientoNegras()
         //{
@@ -205,13 +196,28 @@ namespace AjedrezLogica
         //    return true;
         //}
 
-        private bool ComprobarSiComi()
+        public override bool ComprobarSiComi()
         {
+
+            if (this.Tablero[movaX, movaY].IsOcuped) //Si hay una ficha en el tablero
+            {
+                if (this.Tablero[movaX, movaY].MiFicha.Color == this.Color) //Si es de mi mismo color, tiro error
+                {
+                    return false;
+                }
+                //Si no, sigo con el programa normal
+            }
+            else
+            {
+                return false;
+            }
+
+
             foreach (var ficha in FichasEnemigas)
             {
                 if (ficha.PosX == movaX && ficha.PosY == movaY) 
                 {
-                    this.comi = true;
+                    this.ComiFicha = true;
                     FichaEnemigaComida = ficha;
                     return true;
                 }
@@ -219,17 +225,16 @@ namespace AjedrezLogica
 
             return false;
         }
+
         private bool ComprobarSiNoComi()
         {
-            foreach (var ficha in FichasEnemigas)
+            if (this.Tablero[movaX, movaY].IsOcuped) //Si hay una ficha en el tablero donde quiero moverme
             {
-                if (ficha.PosX == movaX && ficha.PosY == movaY)
-                {
-                    return false; //No puedo comer
-                }
+                return false; //No puedo comer
             }
-            return true; //No comi a nadie
-        }
+           
+            return true; //No como a nadie
+        } //Metodo Especifico del peon
 
         public override void Mover()
         {
