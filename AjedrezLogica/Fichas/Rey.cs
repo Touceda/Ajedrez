@@ -12,7 +12,7 @@ namespace AjedrezLogica
         private string[] PosiblesMovimientos;
 
 
-        public Rey(int pX, int pY, string pColor)
+        public Rey (int pX, int pY, string pColor)
         {
             this.PosX = pX;
             this.PosY = pY;
@@ -128,10 +128,8 @@ namespace AjedrezLogica
                     {
                         return false; //Ocurrio un error
                     }
-                    else
-                    {
-                       return true;
-                    }
+
+                    return true;
              
                 }
             }

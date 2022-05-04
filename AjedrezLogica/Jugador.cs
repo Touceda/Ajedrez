@@ -81,31 +81,39 @@ namespace AjedrezLogica
 
         private void CrearFichas()
         {
+
             if (isblack)
             {
-                Fichas.Add(new Peon(6, 0, "N"));
-                Fichas.Add(new Peon(6, 1, "N"));
-                Fichas.Add(new Peon(6, 2, "N"));
-                Fichas.Add(new Peon(6, 3, "N"));
-                Fichas.Add(new Peon(6, 4, "N"));
-                Fichas.Add(new Peon(6, 5, "N"));
-                Fichas.Add(new Peon(6, 6, "N"));
-                Fichas.Add(new Peon(6, 7, "N"));
+                //Fichas.Add(new Peon(6, 0, "N"));
+                //Fichas.Add(new Peon(6, 1, "N"));
+                //Fichas.Add(new Peon(6, 2, "N"));
+                //Fichas.Add(new Peon(6, 3, "N"));
+                //Fichas.Add(new Peon(6, 4, "N"));
+                //Fichas.Add(new Peon(6, 5, "N"));
+                //Fichas.Add(new Peon(6, 6, "N"));
+                //Fichas.Add(new Peon(6, 7, "N"));
 
-                Fichas.Add(new Rey(7, 4, "N"));
+                Fichas.Add(new Torre(0, 3, "N"));
+                Fichas.Add(new Torre(3, 3, "N"));
+
+                //Fichas.Add(new Rey(7, 4, "N"));
                 return;
             }
 
-            Fichas.Add(new Peon(1, 0, "B"));
-            Fichas.Add(new Peon(1, 1, "B"));
-            Fichas.Add(new Peon(1, 2, "B"));
-            Fichas.Add(new Peon(1, 3, "B"));
-            Fichas.Add(new Peon(1, 4, "B"));
-            Fichas.Add(new Peon(1, 5, "B"));
-            Fichas.Add(new Peon(1, 6, "B"));
-            Fichas.Add(new Peon(1, 7, "B"));
 
-            Fichas.Add(new Rey(0, 4, "B"));
+            //Fichas.Add(new Peon(1, 0, "B"));
+            //Fichas.Add(new Peon(1, 1, "B"));
+            //Fichas.Add(new Peon(1, 2, "B"));
+            //Fichas.Add(new Peon(1, 3, "B"));
+            //Fichas.Add(new Peon(1, 4, "B"));
+            //Fichas.Add(new Peon(1, 5, "B"));
+            //Fichas.Add(new Peon(1, 6, "B"));
+            //Fichas.Add(new Peon(1, 7, "B"));
+            
+            Fichas.Add(new Torre(0, 0, "B"));
+            Fichas.Add(new Torre(4, 4, "B"));
+
+            //Fichas.Add(new Rey(0, 4, "B"));
         }
     }
 }
