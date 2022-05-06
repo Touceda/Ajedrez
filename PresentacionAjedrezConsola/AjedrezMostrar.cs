@@ -52,11 +52,22 @@ namespace PresentacionAjedrezConsola
             Console.Clear();
 
             TurnoDe();
+       
+            int xSelect = -1;
+            int ySelect = -1;
             bool cambiocolor = true;
             var tabaux = tab;
             Console.ForegroundColor = ConsoleColor.Red; //Cambio color
-            Console.WriteLine("    A   B   C   D   E   F   G   H"); //██
+            Console.WriteLine("█   A B C D E F G H"); //██
             Console.WriteLine();
+
+
+
+            if (Juego.FichaSeleccionada != "0") 
+            {
+                xSelect = int.Parse(Juego.FichaSeleccionada[0].ToString());
+                ySelect = int.Parse(Juego.FichaSeleccionada[1].ToString());
+            }
 
             for (int x = 0; x < 8; x++) 
             {
@@ -77,10 +88,9 @@ namespace PresentacionAjedrezConsola
                     cambiocolor = !cambiocolor;
 
 
-
                     if (tabaux[x, y].IsOcuped == false)
                     {
-                        Console.Write(tabaux[x, y].nombre + "  ");
+                        Console.Write(tabaux[x, y].nombre + "");
                     }
                     else
                     {
@@ -90,12 +100,14 @@ namespace PresentacionAjedrezConsola
                         if (tabaux[x, y].MiFicha.Color == "B") 
                         {
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write(tabaux[x, y].MiFicha.Nombre + "  ");
+                            if (xSelect == x && ySelect == y) { Console.ForegroundColor = ConsoleColor.Yellow; }
+                            Console.Write(tabaux[x, y].MiFicha.Nombre + "");
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            Console.Write(tabaux[x, y].MiFicha.Nombre + "  ");
+                            if (xSelect == x && ySelect == y) { Console.ForegroundColor = ConsoleColor.Yellow; }
+                            Console.Write(tabaux[x, y].MiFicha.Nombre + "");
                         }
                         
                     }
@@ -103,6 +115,7 @@ namespace PresentacionAjedrezConsola
                     
                 }
                 Console.WriteLine();
+                //Console.WriteLine();
             }
         }
         
@@ -164,6 +177,8 @@ namespace PresentacionAjedrezConsola
                 string moverficha = Console.ReadLine();
                 if (moverficha == "ESC" || moverficha == "esc" || moverficha == "Esc") 
                 {
+                    Juego.ReinicarFicha();
+                    ImprimirTablero(Juego.MiTablero);
                     return;
                 }
                 moverficha = moverficha[0].ToString() + moverficha[1].ToString();

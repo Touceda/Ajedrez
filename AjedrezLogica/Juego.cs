@@ -16,6 +16,11 @@ namespace AjedrezLogica
         public EspacioTablero[,] MiTablero { get { return tablero; }set { tablero = value; } }
         public string HayGanador = "no";
 
+        private string fichaSeleccionada;
+        public string FichaSeleccionada { get { return fichaSeleccionada; } }
+
+        public void ReinicarFicha() { this.fichaSeleccionada = "0"; }
+
 
         public Juego()
         {
@@ -23,6 +28,7 @@ namespace AjedrezLogica
             JugadorNegro = new Jugador("Bautista", true);//Modificar a la capa de consola, pasar nombre y quien es blanco
             whiteturn = true;
             this.MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas,JugadorNegro.MisFichas);
+            this.fichaSeleccionada = "0";
         }
 
 
@@ -42,20 +48,25 @@ namespace AjedrezLogica
                 return false;
             }
 
-            //Ficha fichaSeleccionada = MiTablero[x, y].MiFicha;
-
-            //if (fichaSeleccionada == null) //Si no hay ficha en la posicion devuelvo falso para reiniciar el tablero
-            //{
-            //    return false;
-            //}
+            this.fichaSeleccionada = x.ToString() + y.ToString();
 
             if (this.WhiteTurn)
             {
-                return JugadorBlanco.SeleccionarFicha(x, y);
+                if (JugadorBlanco.SeleccionarFicha(x, y))
+                {
+                    return true;
+                }
+                this.fichaSeleccionada = "0";
+                return false;
             }
             else
             {
-                return JugadorNegro.SeleccionarFicha(x, y);
+                if (JugadorNegro.SeleccionarFicha(x, y))
+                {
+                    return true;
+                }
+                this.fichaSeleccionada = "0";
+                return false;
             }
         } //Compruebo que seleccione una ficha de forma correcta
 
