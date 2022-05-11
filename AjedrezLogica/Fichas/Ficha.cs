@@ -44,7 +44,7 @@ namespace AjedrezLogica
         {
             this.PosX = pX;
             this.PosY = pY;
-            this.Nombre = "P" + pColor.ToString();
+            this.Nombre = "Peon";
             this.Color = pColor;
             this.ComiFicha = false;
             CalcularMovimientosPosibles();

@@ -16,7 +16,7 @@ namespace AjedrezLogica
         {
             this.PosX = pX;
             this.PosY = pY;
-            this.Nombre = "T" + pColor.ToString();
+            this.Nombre = "Torre";
             this.Color = pColor;
             this.ComiFicha = false;
             CalcularMovimientosPosibles();

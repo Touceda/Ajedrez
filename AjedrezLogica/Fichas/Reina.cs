@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace AjedrezLogica
 {
-    public class Alfil:Ficha
+    public class Reina: Ficha
     {
         private string[] PosiblesMovimientos;
 
-
-        public Alfil(int pX, int pY, string pColor)
+        public Reina(int pX, int pY, string pColor)
         {
             this.PosX = pX;
             this.PosY = pY;
-            this.Nombre = "Alfil";
+            this.Nombre = "Dama";
             this.Color = pColor;
             this.ComiFicha = false;
             CalcularMovimientosPosibles();
@@ -25,10 +24,12 @@ namespace AjedrezLogica
         {
             int posiblex = this.PosX;
             int posibley = this.PosY;
-            //Math.Abs(S) devuelve valor de negativo a positivo
-            string[] Movimientos = new string[13];
+
+            string[] Movimientos = new string[27];
             int indexMov = 0;
 
+
+            //Movimiento de Alfil
             //Calcular Movimientos Hacia arriba y Derecha
             while (posiblex < 7 && posibley < 7)
             {
@@ -63,7 +64,7 @@ namespace AjedrezLogica
             posiblex = this.PosX;
             posibley = this.PosY;
             //Calcular Movimientos hacia Abajo y Izquierda
-            while (posiblex > 0 && posibley > 0) 
+            while (posiblex > 0 && posibley > 0)
             {
                 posiblex--;
                 posibley--;
@@ -71,7 +72,45 @@ namespace AjedrezLogica
                 indexMov++;
             }
 
-            while (indexMov < 13)  
+            //Movimiento De Torre
+            //Calcular Movimientos Hacia arriba
+            while (posiblex < 7 && posiblex >= 0)
+            {
+                posiblex++;
+                Movimientos[indexMov] = posiblex.ToString() + posibley.ToString();
+                indexMov++;
+            }
+
+            posiblex = this.PosX;
+            //Calcular Movimientos hacia abajo
+            while (posiblex > 0 && posiblex <= 7)
+            {
+                posiblex--;
+                Movimientos[indexMov] = posiblex.ToString() + posibley.ToString();
+                indexMov++;
+            }
+
+            posiblex = this.PosX;
+            //Calcular Movimientos Hacia Derecha
+            while (posibley < 7 && posibley >= 0)
+            {
+                posibley++;
+                Movimientos[indexMov] = posiblex.ToString() + posibley.ToString();
+                indexMov++;
+            }
+
+            posibley = this.PosY;
+            //Calcular Movimientos hacia Izquierda
+            while (posibley > 0 && posibley <= 7)
+            {
+                posibley--;
+                Movimientos[indexMov] = posiblex.ToString() + posibley.ToString();
+                indexMov++;
+            }
+
+
+
+            while (indexMov < 27)
             {
                 Movimientos[indexMov] = "No Mov";
                 indexMov++;
@@ -160,7 +199,7 @@ namespace AjedrezLogica
                         auxPositionY--;
                     }
                     return ComprobarSiComi();
-                }       
+                }
             } //Mov hacia arriba
 
             if (movaX < this.PosX) //Se ejecuta si el movimiento de la torre es hacia ARRIBA

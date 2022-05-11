@@ -35,9 +35,10 @@ namespace AjedrezLogica
 
         public bool ComprobarFichaConsola(string ficha)
         {
+
             int x;
             int y;
-
+            
 
             x = int.Parse(ficha[0].ToString());
 
@@ -96,16 +97,45 @@ namespace AjedrezLogica
                 ComprobarSiComiFicha(isTrue);
             }
 
-
-
-            if (isTrue)
-            {
-                MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas, JugadorNegro.MisFichas);
-                this.whiteturn = !whiteturn;
-            }
-
             return isTrue;
         } //Compruebo si el movimineto es correcto
+
+        public void CambioDeTruno()
+        {
+            MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas, JugadorNegro.MisFichas);
+            this.whiteturn = !whiteturn;
+        }
+
+        public bool ComprobarCambioDeFicha() //Caso de que peon este en el limite del tablero
+        {
+            if (this.WhiteTurn)
+            {
+                if (JugadorBlanco.cambioPeon)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (JugadorNegro.cambioPeon)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void CambiarPeon(string ficha)
+        {
+            if (this.WhiteTurn)
+            {
+                JugadorBlanco.CambiarPeon(ficha);
+            }
+            else
+            {
+                JugadorNegro.CambiarPeon(ficha);
+            }
+        }
 
         private void ComprobarSiComiFicha(bool movimientoRealizado)
         {
@@ -117,6 +147,10 @@ namespace AjedrezLogica
                     Ficha fichaMuerta = JugadorBlanco.UltimaFichaComida;
                     JugadorBlanco.comiFicha = false;
                     JugadorNegro.MatarFicha(fichaMuerta);
+                    if (fichaMuerta is Rey)
+                    {
+                        this.HayGanador = "Blanco";
+                    }
                 }
             }
 
@@ -127,7 +161,10 @@ namespace AjedrezLogica
                     Ficha fichaMuerta = JugadorNegro.UltimaFichaComida;
                     JugadorNegro.comiFicha = false;
                     JugadorBlanco.MatarFicha(fichaMuerta);
-
+                    if (fichaMuerta is Rey)
+                    {
+                        this.HayGanador = "Negro";
+                    }
                 }
             }
         }

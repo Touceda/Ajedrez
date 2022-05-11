@@ -23,7 +23,18 @@ namespace PresentacionAjedrezConsola
 
         private void LoopGame()
         {
-            while (Juego.HayGanador == "no") { SeleccionarFicha(); }      
+            while (Juego.HayGanador == "no") { SeleccionarFicha(); }
+
+            Console.Clear();
+            if (Juego.HayGanador == "Blanco") 
+            {
+                Console.Write("Ganador" + Juego.JugadorBlanco.Nombre.ToString() + " Jugador Blanco");
+            }
+            else
+            {
+                Console.Write("Ganador" + Juego.JugadorNegro.Nombre.ToString() + " Jugador Negro");
+            }
+            
         }
 
 
@@ -58,7 +69,7 @@ namespace PresentacionAjedrezConsola
             bool cambiocolor = true;
             var tabaux = tab;
             Console.ForegroundColor = ConsoleColor.Red; //Cambio color
-            Console.WriteLine("█   A B C D E F G H"); //██
+            Console.WriteLine("██  A   B   C   D   E   F   G   H"); //██
             Console.WriteLine();
 
 
@@ -90,7 +101,7 @@ namespace PresentacionAjedrezConsola
 
                     if (tabaux[x, y].IsOcuped == false)
                     {
-                        Console.Write(tabaux[x, y].nombre + "");
+                        Console.Write(tabaux[x, y].nombre+"  ");
                     }
                     else
                     {
@@ -101,13 +112,13 @@ namespace PresentacionAjedrezConsola
                         {
                             Console.ForegroundColor = ConsoleColor.White;
                             if (xSelect == x && ySelect == y) { Console.ForegroundColor = ConsoleColor.Yellow; }
-                            Console.Write(tabaux[x, y].MiFicha.Nombre + "");
+                            Console.Write(tabaux[x, y].MiFicha.Nombre[0] + "B  ");
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                             if (xSelect == x && ySelect == y) { Console.ForegroundColor = ConsoleColor.Yellow; }
-                            Console.Write(tabaux[x, y].MiFicha.Nombre + "");
+                            Console.Write(tabaux[x, y].MiFicha.Nombre[0] + "N  ");
                         }
                         
                     }
@@ -115,7 +126,7 @@ namespace PresentacionAjedrezConsola
                     
                 }
                 Console.WriteLine();
-                //Console.WriteLine();
+                Console.WriteLine();
             }
         }
         
@@ -131,11 +142,20 @@ namespace PresentacionAjedrezConsola
                 Console.WriteLine("Seleccione la ficha para mover: ");
                 ficha = Console.ReadLine();
                 ficha = ficha[0].ToString() + ficha[1].ToString();
-
+                string fichaSelect = "";
 
                 if (this.Juego.ComprobarFichaConsola(ficha))
                 {
-                    AdondeMover(ficha);
+                    if (this.Juego.WhiteTurn)
+                    {
+                        fichaSelect = this.Juego.JugadorBlanco.FichaSeleccionada.Nombre.ToString() + " Blanco";                       
+                    }
+                    else
+                    {
+                        fichaSelect = this.Juego.JugadorNegro.FichaSeleccionada.Nombre.ToString() + " Negro";
+                    }
+
+                    AdondeMover(ficha, fichaSelect);
                 }
                 else
                 {
@@ -164,15 +184,15 @@ namespace PresentacionAjedrezConsola
             SeleccionarFicha();
         }
 
-        public void AdondeMover(string ficha)
+        public void AdondeMover(string ficha,string fichaselect)
         {
             try
-            {
+            {                
                 Console.Clear();
                 ImprimirTablero(Juego.MiTablero);
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine("Ficha Seleccionada:  " + ficha.ToString() + "    Escriba ''ESC'' Para seleccionar otra ficha.");
+                Console.WriteLine("Ficha Seleccionada:  " + fichaselect + "    Escriba ''ESC'' Para seleccionar otra ficha.");
                 Console.WriteLine("Seleccione a donde se quiere mover: ");
                 string moverficha = Console.ReadLine();
                 if (moverficha == "ESC" || moverficha == "esc" || moverficha == "Esc") 
@@ -186,11 +206,16 @@ namespace PresentacionAjedrezConsola
 
                 if (this.Juego.ComprobarMovimientoConsola(moverficha))
                 {
+                    if (Juego.ComprobarCambioDeFicha())
+                    {
+                        CambioDeFicha();
+                    }                 
+                    Juego.CambioDeTruno();
                     ImprimirTablero(Juego.MiTablero);
                 }
                 else
                 {
-                    ErrorReinicioDeMovimiento(ficha);
+                    ErrorReinicioDeMovimiento(ficha,fichaselect);
                 }
 
 
@@ -201,17 +226,48 @@ namespace PresentacionAjedrezConsola
                 Console.WriteLine("Error al Mover la ficha, Precione Enter para reiniciar Turno");
                 Console.ReadLine();
                 ImprimirTablero(this.Juego.MiTablero);
-                AdondeMover(ficha);
+                AdondeMover(ficha,fichaselect);
             }
-
         }//Selecciono el movimiento y veo si esta bien
 
-        public void ErrorReinicioDeMovimiento(string ficha)
+        public void CambioDeFicha()
+        {
+            try
+            {
+                Console.Clear();
+                Console.WriteLine("Peon Llego al limite, Elegir ficha para remplazarla");
+                Console.WriteLine();
+                Console.WriteLine("1 : Torre");
+                Console.WriteLine("2 : Caballo");
+                Console.WriteLine("3 : Alfil");
+                Console.WriteLine("4 : Reina");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.Write("Seleccione numero del 1 al 4 y precione ENTER :   ");
+                switch (Console.ReadLine()[0].ToString())
+                {
+                    case "1": { Juego.CambiarPeon("Torre"); break; }
+                    case "2": { Juego.CambiarPeon("Caballo"); break; }
+                    case "3": { Juego.CambiarPeon("Alfil"); break; }
+                    case "4": { Juego.CambiarPeon("Reina"); break; }
+                    default: { CambioDeFicha(); break; }
+                }
+            }
+            catch (Exception)
+            {
+                Console.Clear();
+                Console.WriteLine("Ocurrio un error, Precione ENTER y vuelva a seleccionar ficha de remplazo");
+                Console.ReadLine();
+                CambioDeFicha();               
+            }       
+        }
+
+        public void ErrorReinicioDeMovimiento(string ficha, string fichaselect)
         {
             Console.Clear();
             Console.WriteLine("Error al Mover ficha, Precione Enter para reiniciar Movimiento");
             Console.ReadLine();
-            AdondeMover(ficha);
+            AdondeMover(ficha,fichaselect);
         }
 
 
