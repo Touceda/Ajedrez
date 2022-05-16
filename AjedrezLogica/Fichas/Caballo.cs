@@ -13,6 +13,8 @@ namespace AjedrezLogica
 
         public Caballo(int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 4; }
+            if (pColor == "N") { this.IdImagen = 5; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Caballo";

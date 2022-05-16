@@ -14,6 +14,8 @@ namespace AjedrezLogica
 
         public Rey (int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 10; }
+            if (pColor == "N") { this.IdImagen = 11; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Rey";

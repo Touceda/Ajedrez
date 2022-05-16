@@ -1,4 +1,4 @@
-namespace PresentacionAjedrezWindowsForms
+namespace AjedrezWindowsForms
 {
     internal static class Program
     {

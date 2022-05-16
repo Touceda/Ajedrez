@@ -13,6 +13,8 @@ namespace AjedrezLogica
 
         public Alfil(int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 6; }
+            if (pColor == "N") { this.IdImagen = 7; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Alfil";

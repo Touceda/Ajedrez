@@ -12,6 +12,8 @@ namespace AjedrezLogica
 
         public Reina(int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 8; }
+            if (pColor == "N") { this.IdImagen = 9; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Dama";

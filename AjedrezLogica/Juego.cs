@@ -33,6 +33,31 @@ namespace AjedrezLogica
 
 
 
+        public bool ComprobarFichaWForms(int x, int y)
+        {      
+
+            this.fichaSeleccionada = x.ToString() + y.ToString();
+
+            if (this.WhiteTurn)
+            {
+                if (JugadorBlanco.SeleccionarFicha(x, y))
+                {
+                    return true;
+                }
+                this.fichaSeleccionada = "0";
+                return false;
+            }
+            else
+            {
+                if (JugadorNegro.SeleccionarFicha(x, y))
+                {
+                    return true;
+                }
+                this.fichaSeleccionada = "0";
+                return false;
+            }
+        } //Compruebo que seleccione una ficha de forma correcta
+
         public bool ComprobarFichaConsola(string ficha)
         {
 

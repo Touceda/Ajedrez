@@ -14,6 +14,8 @@ namespace AjedrezLogica
 
         public Torre(int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 2; }
+            if (pColor == "N") { this.IdImagen = 3; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Torre";

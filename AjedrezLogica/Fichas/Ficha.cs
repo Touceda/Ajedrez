@@ -16,6 +16,9 @@ namespace AjedrezLogica
         public int PosX { get { return x; } set { x = value; } }
         private int y;
         public int PosY { get { return y; } set { y = value; } }
+        private int idImagen;
+        public int IdImagen { get { return idImagen; } set { idImagen = value; } }
+
 
         private Ficha fichaenemigacomida;
         public Ficha FichaEnemigaComida { get { return fichaenemigacomida; } set { fichaenemigacomida = value; } }
@@ -42,6 +45,8 @@ namespace AjedrezLogica
 
         public Peon(int pX, int pY, string pColor)
         {
+            if (pColor == "B") { this.IdImagen = 0; }
+            if (pColor == "N") { this.IdImagen = 1; }
             this.PosX = pX;
             this.PosY = pY;
             this.Nombre = "Peon";
