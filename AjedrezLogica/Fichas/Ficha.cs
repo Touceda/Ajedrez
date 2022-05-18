@@ -19,6 +19,10 @@ namespace AjedrezLogica
         private int idImagen;
         public int IdImagen { get { return idImagen; } set { idImagen = value; } }
 
+        //Esto es de WinForms
+        private bool enMovimiento;
+        public bool EnMovimiento{ get { return enMovimiento; } set { enMovimiento = value; } }       
+
 
         private Ficha fichaenemigacomida;
         public Ficha FichaEnemigaComida { get { return fichaenemigacomida; } set { fichaenemigacomida = value; } }
@@ -246,9 +250,7 @@ namespace AjedrezLogica
             this.PosX = movaX;
             this.PosY = movaY;
             CalcularMovimientosPosibles();
-        }
-
-       
+        }      
     }
 
 

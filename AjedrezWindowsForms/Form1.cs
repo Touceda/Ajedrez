@@ -45,10 +45,11 @@ namespace AjedrezWindowsForms
             return imagenes;
         }
        
-
+        
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            
             ImprimirTablero(g);
         }
 
@@ -87,22 +88,37 @@ namespace AjedrezWindowsForms
 
             foreach (var ficha in this.Juego.JugadorBlanco.MisFichas)
             {
-                x = 100 * ficha.PosX;
-                y = 100 * ficha.PosY;
+                if (ficha.EnMovimiento == true)
+                {
+                    g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(mouseX-50, mouseY-50));
+                }
+                else
+                {
+                    x = 100 * ficha.PosX;
+                    y = 100 * ficha.PosY;
 
-                x += 100;
-                y += 100;
-                g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(y,x));
+                    x += 100;
+                    y += 100;
+                    g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(y, x));
+                }              
             }
 
             foreach (var ficha in this.Juego.JugadorNegro.MisFichas)
             {
-                x = 100 * ficha.PosX;
-                y = 100 * ficha.PosY;
 
-                x += 100;
-                y += 100;
-                g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(y, x));
+                if (ficha.EnMovimiento == true)
+                {
+                    g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(mouseX - 50, mouseY - 50));
+                }
+                else
+                {
+                    x = 100 * ficha.PosX;
+                    y = 100 * ficha.PosY;
+
+                    x += 100;
+                    y += 100;
+                    g.DrawImage(ImagenesFichas[ficha.IdImagen], new Point(y, x));
+                }
             }
 
 
@@ -117,7 +133,7 @@ namespace AjedrezWindowsForms
 
             if (fichaSeleccionada)
             {
-                Game();
+                SeleccionarFicha();
             }
             
             
@@ -126,8 +142,8 @@ namespace AjedrezWindowsForms
             Refresh();
         }
 
-
-        private void Game()
+        Ficha fichaSelect;
+        private void SeleccionarFicha()
         {
             fichaSeleccionada = false;
             //Busco la coordenada
@@ -138,7 +154,20 @@ namespace AjedrezWindowsForms
 
             if (Juego.HayGanador == "no") 
             {
-                Juego.ComprobarFichaWForms(y,x);
+               
+                if (this.Juego.ComprobarFichaWForms(x, y))
+                {
+                    if (this.Juego.WhiteTurn)
+                    {
+                        fichaSelect = this.Juego.JugadorBlanco.FichaSeleccionada;
+                        this.Juego.JugadorBlanco.ActualizarFichaEnMovimiento(true);
+                    }
+                    else
+                    {
+                        fichaSelect = this.Juego.JugadorNegro.FichaSeleccionada;
+                        this.Juego.JugadorNegro.ActualizarFichaEnMovimiento(true);
+                    }                                   
+                }
             }
 
             //while (Juego.HayGanador == "no") { SeleccionarFicha(); }
@@ -204,14 +233,22 @@ namespace AjedrezWindowsForms
         int mouseX, mouseY;
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            XmouseSelect = e.X;
-            YmouseSelect = e.Y;
+            //Por la forma que se dibuja el tablero, tengo que invertir los ejes x e y 
+            XmouseSelect = e.Y;
+            YmouseSelect = e.X;
             fichaSeleccionada = true;
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            
+            if (this.Juego.WhiteTurn)
+            {
+                this.Juego.JugadorBlanco.ActualizarFichaEnMovimiento(false);
+            }
+            else
+            {
+                this.Juego.JugadorNegro.ActualizarFichaEnMovimiento(false);
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)

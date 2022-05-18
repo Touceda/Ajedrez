@@ -62,6 +62,17 @@ namespace AjedrezLogica
             return moviFicha;
         }
 
+        public void ActualizarFichaEnMovimiento(bool enMovimiento) //Wforms
+        {
+            foreach (var ficha in MisFichas)
+            {
+                if (ficha == fichaseleccionada)
+                {
+                    ficha.EnMovimiento = enMovimiento;
+                }
+            }
+        }
+
         public bool comiFicha = false;
         public Ficha UltimaFichaComida;
         private void ComprobarSiComiFicha(Ficha ficha)
