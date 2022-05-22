@@ -12,12 +12,24 @@ namespace PresentacionAjedrezConsola
         private Juego Juego;
 
 
-
         public AjedrezMostrar()
         {
-            Juego = new Juego();
+            Juego = new Juego(PlayersName("Jugador BLANCO"), PlayersName("Jugador NEGRO"));
             ImprimirTablero(Juego.MiTablero);
             LoopGame();
+        }
+
+        private string PlayersName(string mensaje)
+        {
+            string jugname = "";
+
+            while (jugname == "")
+            {
+                Console.WriteLine("Seleccionar Nombre de " + mensaje);
+                jugname = Console.ReadLine();
+            }
+            Console.Clear();
+            return jugname;
         }
 
 
@@ -26,15 +38,10 @@ namespace PresentacionAjedrezConsola
             while (Juego.HayGanador == "no") { SeleccionarFicha(); }
 
             Console.Clear();
-            if (Juego.HayGanador == "Blanco") 
-            {
-                Console.Write("Ganador" + Juego.JugadorBlanco.Nombre.ToString() + " Jugador Blanco");
-            }
-            else
-            {
-                Console.Write("Ganador" + Juego.JugadorNegro.Nombre.ToString() + " Jugador Negro");
-            }
-            
+            Console.Write(Juego.HayGanador.ToString() + " Gano la partida");
+            Console.ReadLine();
+            Environment.Exit(0);
+
         }
 
 
@@ -46,12 +53,12 @@ namespace PresentacionAjedrezConsola
             if (this.Juego.WhiteTurn)
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Turno De:  " + this.Juego.JugadorBlanco.Nombre.ToString());
+                Console.WriteLine("Turno De:  " + this.Juego.NombreJugador()) ;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("Turno De:  " + this.Juego.JugadorNegro.Nombre.ToString());
+                Console.WriteLine("Turno De:  " + this.Juego.NombreJugador());
             }
 
             Console.WriteLine();

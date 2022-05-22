@@ -63,6 +63,49 @@ namespace AjedrezLogica
             return y;
         }
 
+        public static int BuscarPosition(int Posicion)
+        {
+            if (Posicion >= 100 && Posicion <= 200)
+            {
+                return 0;
+            }
 
+            if (Posicion >= 200 && Posicion <= 300)
+            {
+                return 1;
+            }
+
+            if (Posicion >= 300 && Posicion <= 400)
+            {
+                return 2;
+            }
+
+            if (Posicion >= 400 && Posicion <= 500)
+            {
+                return 3;
+            }
+
+            if (Posicion >= 500 && Posicion <= 600)
+            {
+                return 4;
+            }
+
+            if (Posicion >= 600 && Posicion <= 700)
+            {
+                return 5;
+            }
+
+            if (Posicion >= 700 && Posicion <= 800)
+            {
+                return 6;
+            }
+
+            if (Posicion >= 800 && Posicion <= 900)
+            {
+                return 7;
+            }
+
+            return -1;
+        }
     }
 }

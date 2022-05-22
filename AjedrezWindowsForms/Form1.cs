@@ -3,13 +3,14 @@ namespace AjedrezWindowsForms
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string jugBlanco, string jugNegro)
         {
             InitializeComponent();
+            Juego = new Juego(jugBlanco, jugNegro);
         }
 
 
-        Juego Juego = new Juego();
+        Juego Juego;
         Bitmap [] ImagenesFichas;
         Bitmap CuadroBlanco = new Bitmap(Properties.Resources.CuadroBlanco, 100, 100);
         Bitmap CuadroNegro = new Bitmap(Properties.Resources.CuadroNegro, 100, 100);
@@ -17,7 +18,7 @@ namespace AjedrezWindowsForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            fichaSeleccionada = false;
+            actualizarEstadoDeFicha = false;
             ImagenesFichas = CrearImagenes();
             //Este codigo es para el refresh mas suave
             SetStyle(ControlStyles.UserPaint
@@ -124,63 +125,62 @@ namespace AjedrezWindowsForms
 
         }
 
-        bool fichaSeleccionada;
+        bool actualizarEstadoDeFicha;
         int XmouseSelect, YmouseSelect;
+        int fichaseleccionadaestado = 0;
+
 
         private void TimerGame_Tick(object sender, EventArgs e)
         {
-            label1.Text = mouseX.ToString() + "   " + mouseY.ToString();
+            label1.Text = this.Juego.NombreJugador();
 
-            if (fichaSeleccionada)
+
+            if (Juego.HayGanador != "no") { TimerGame.Enabled = false; MessageBox.Show(this.Juego.HayGanador.ToString() + "Fue El ganador de la partida"); }
+
+
+            if (actualizarEstadoDeFicha)
             {
-                SeleccionarFicha();
+                switch (fichaseleccionadaestado)
+                {
+                    case 0: { SeleccionarFicha(); break; }
+                    case 1: { MoverFicha(); break; }
+                    default: break;
+                }
             }
-            
-            
-
 
             Refresh();
         }
 
-        Ficha fichaSelect;
         private void SeleccionarFicha()
         {
-            fichaSeleccionada = false;
+            actualizarEstadoDeFicha = false;
             //Busco la coordenada
             int x = BuscarPos(this.XmouseSelect);
             int y = BuscarPos(this.YmouseSelect);
 
-
-
-            if (Juego.HayGanador == "no") 
+            if (this.Juego.ComprobarFichaWForms(x, y))
             {
-               
-                if (this.Juego.ComprobarFichaWForms(x, y))
-                {
-                    if (this.Juego.WhiteTurn)
-                    {
-                        fichaSelect = this.Juego.JugadorBlanco.FichaSeleccionada;
-                        this.Juego.JugadorBlanco.ActualizarFichaEnMovimiento(true);
-                    }
-                    else
-                    {
-                        fichaSelect = this.Juego.JugadorNegro.FichaSeleccionada;
-                        this.Juego.JugadorNegro.ActualizarFichaEnMovimiento(true);
-                    }                                   
-                }
+                fichaseleccionadaestado = 1;
             }
 
-            //while (Juego.HayGanador == "no") { SeleccionarFicha(); }
 
-            //if (Juego.HayGanador == "Blanco")
-            //{
-            //    Console.Write("Ganador" + Juego.JugadorBlanco.Nombre.ToString() + " Jugador Blanco");
-            //}
-            //else
-            //{
-            //    Console.Write("Ganador" + Juego.JugadorNegro.Nombre.ToString() + " Jugador Negro");
-            //}
+        }
 
+        private void MoverFicha()
+        {
+            actualizarEstadoDeFicha = false;
+
+            fichaseleccionadaestado = 0; 
+
+            //Busco la coordenada
+            int x = BuscarPos(this.XmouseSelect);
+            int y = BuscarPos(this.YmouseSelect);
+
+            if (this.Juego.ComprobarMovimientoWforms(x, y))
+            {
+                this.Juego.CambioDeTruno();
+            }
+            
         }
 
         private int BuscarPos(int Posicion)
@@ -236,19 +236,25 @@ namespace AjedrezWindowsForms
             //Por la forma que se dibuja el tablero, tengo que invertir los ejes x e y 
             XmouseSelect = e.Y;
             YmouseSelect = e.X;
-            fichaSeleccionada = true;
+            actualizarEstadoDeFicha = true;
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             if (this.Juego.WhiteTurn)
             {
+                XmouseSelect = e.Y;
+                YmouseSelect = e.X;
                 this.Juego.JugadorBlanco.ActualizarFichaEnMovimiento(false);
             }
             else
             {
+             
+                XmouseSelect = e.Y;
+                YmouseSelect = e.X;
                 this.Juego.JugadorNegro.ActualizarFichaEnMovimiento(false);
             }
+            actualizarEstadoDeFicha = true;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)

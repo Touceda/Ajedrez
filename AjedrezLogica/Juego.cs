@@ -21,11 +21,19 @@ namespace AjedrezLogica
 
         public void ReinicarFicha() { this.fichaSeleccionada = "0"; }
 
-
-        public Juego()
+        public string NombreJugador()
         {
-            JugadorBlanco = new Jugador("Nicolas",false);//Modificar a la capa de consola, pasar nombre y quien es blanco
-            JugadorNegro = new Jugador("Bautista", true);//Modificar a la capa de consola, pasar nombre y quien es blanco
+            if (whiteturn)
+            {
+                return JugadorBlanco.Nombre.ToString();
+            }
+            return JugadorNegro.Nombre.ToString();
+        }
+
+        public Juego(string pJugadorBlanco, string pJugadorNegro)
+        {
+            JugadorBlanco = new Jugador(pJugadorBlanco,false);//Modificar a la capa de consola, pasar nombre y quien es blanco
+            JugadorNegro = new Jugador(pJugadorNegro, true);//Modificar a la capa de consola, pasar nombre y quien es blanco
             whiteturn = true;
             this.MiTablero = Tablero.ActualizarTablero(JugadorBlanco.MisFichas,JugadorNegro.MisFichas);
             this.fichaSeleccionada = "0";
@@ -41,7 +49,8 @@ namespace AjedrezLogica
             if (this.WhiteTurn)
             {
                 if (JugadorBlanco.SeleccionarFicha(x, y))
-                {
+                {              
+                    JugadorBlanco.ActualizarFichaEnMovimiento(true);
                     return true;
                 }
                 this.fichaSeleccionada = "0";
@@ -51,6 +60,7 @@ namespace AjedrezLogica
             {
                 if (JugadorNegro.SeleccionarFicha(x, y))
                 {
+                    JugadorNegro.ActualizarFichaEnMovimiento(true);
                     return true;
                 }
                 this.fichaSeleccionada = "0";
@@ -95,6 +105,23 @@ namespace AjedrezLogica
                 return false;
             }
         } //Compruebo que seleccione una ficha de forma correcta
+
+        public bool ComprobarMovimientoWforms(int x, int y)
+        {
+            bool isTrue;
+            if (this.WhiteTurn)
+            {
+                isTrue = JugadorBlanco.MoverFicha(x, y, JugadorNegro.MisFichas, this.MiTablero);
+                ComprobarSiComiFicha(isTrue);
+            }
+            else
+            {
+                isTrue = JugadorNegro.MoverFicha(x, y, JugadorBlanco.MisFichas, this.MiTablero);
+                ComprobarSiComiFicha(isTrue);
+            }
+
+            return isTrue;
+        } //Compruebo si el movimineto es correcto
 
         public bool ComprobarMovimientoConsola(string ficha)
         {
@@ -174,7 +201,7 @@ namespace AjedrezLogica
                     JugadorNegro.MatarFicha(fichaMuerta);
                     if (fichaMuerta is Rey)
                     {
-                        this.HayGanador = "Blanco";
+                        this.HayGanador = JugadorBlanco.Nombre.ToString() ;
                     }
                 }
             }
@@ -188,7 +215,7 @@ namespace AjedrezLogica
                     JugadorBlanco.MatarFicha(fichaMuerta);
                     if (fichaMuerta is Rey)
                     {
-                        this.HayGanador = "Negro";
+                        this.HayGanador = JugadorNegro.Nombre.ToString();
                     }
                 }
             }
