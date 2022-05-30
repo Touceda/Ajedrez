@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AjedrezLogica\AjedrezLogica.csproj" />
+    <ProjectReference Include="..\SQLajedrez\SQLajedrez.csproj" />
   </ItemGroup>
 
   <ItemGroup>

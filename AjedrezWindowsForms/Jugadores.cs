@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SQLajedrez;
 
 namespace AjedrezWindowsForms
 {
     public partial class Jugadores : Form
     {
+        SqlJugadores JugadoresSQL = new SqlJugadores();
+
         public Jugadores()
         {
             InitializeComponent();
+            
         }
 
         Form1 Juego;
@@ -25,19 +29,30 @@ namespace AjedrezWindowsForms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtNegro.Text.Length >= 3 && txtBlanco.Text.Length >= 3 && txtBlanco.Text != txtNegro.Text) 
+            try
             {
-                Juego = new Form1(txtBlanco.Text.ToString(), txtNegro.Text.ToString());
-                Juego.ShowDialog();
-                this.Close();
-            }
-            else
-            {
-                lblError.Text = "Nombre Incorrecto, Revisar que tenga 3 o mas digitos y no se repiran los mismos";
-            }
 
 
-           
+                if (txtNegro.Text.Length >= 3 && txtBlanco.Text.Length >= 3 && txtBlanco.Text != txtNegro.Text)
+                {
+                    JugadoresSQL.CargarNuevaPartida(txtBlanco.Text, txtNegro.Text);
+                    Juego = new Form1(txtBlanco.Text.ToString(), txtNegro.Text.ToString());
+                    Juego.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    lblError.Text = "Nombre Incorrecto, Revisar que tenga 3 o mas digitos y no se repiran los mismos";
+                }
+               
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Problemas de Sql");
+                throw;
+            }
+
         }
     }
 }
