@@ -1,15 +1,17 @@
 using AjedrezLogica;
+using SQLajedrez;
 namespace AjedrezWindowsForms
 {
     public partial class Form1 : Form
     {
-        public Form1(string jugBlanco, string jugNegro)
+        public Form1(int id, string jugBlanco, string jugNegro)
         {
             InitializeComponent();
             Juego = new Juego(jugBlanco, jugNegro);
+            this.id = id;
         }
 
-
+        int id = 0;
         Juego Juego;
         Bitmap [] ImagenesFichas;
         Bitmap CuadroBlanco = new Bitmap(Properties.Resources.CuadroBlanco, 100, 100);
@@ -18,6 +20,7 @@ namespace AjedrezWindowsForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LBLid.Text = "ID De Partida: " + this.id.ToString();
             actualizarEstadoDeFicha = false;
             ImagenesFichas = CrearImagenes();
             //Este codigo es para el refresh mas suave
@@ -46,7 +49,7 @@ namespace AjedrezWindowsForms
             return imagenes;
         }
        
-        
+  
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -157,6 +160,7 @@ namespace AjedrezWindowsForms
             //Busco la coordenada
             int x = BuscarPos(this.XmouseSelect);
             int y = BuscarPos(this.YmouseSelect);
+            FichaSelect = x.ToString() + y.ToString();
 
             if (this.Juego.ComprobarFichaWForms(x, y))
             {
@@ -175,9 +179,11 @@ namespace AjedrezWindowsForms
             //Busco la coordenada
             int x = BuscarPos(this.XmouseSelect);
             int y = BuscarPos(this.YmouseSelect);
+            FichaMoved = x.ToString() + y.ToString();
 
             if (this.Juego.ComprobarMovimientoWforms(x, y))
             {
+                AñadirMovimiento();
                 this.Juego.CambioDeTruno();
             }
             
@@ -228,6 +234,17 @@ namespace AjedrezWindowsForms
             return -1;
         }
 
+        int movimiento = 1;
+        string FichaSelect = "";
+        string FichaMoved = "";
+
+        SqlMovimientos MovimientosSql = new SqlMovimientos();
+        private void AñadirMovimiento()
+        {
+            string Mov = FichaSelect.ToString() + FichaMoved.ToString();
+            MovimientosSql.CargarMovimiento(this.id,this.movimiento,Mov);
+            movimiento++;
+        }
 
         #region Detecta el click y la posicion del mouse
         int mouseX, mouseY;

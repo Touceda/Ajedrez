@@ -11,6 +11,7 @@ using SQLajedrez;
 
 namespace AjedrezWindowsForms
 {
+    //MENU DE JUGAR NUEVA, REVISAR PARTIDA O CONTINUAR
     public partial class Jugadores : Form
     {
         SqlJugadores JugadoresSQL = new SqlJugadores();
@@ -31,12 +32,10 @@ namespace AjedrezWindowsForms
         {
             try
             {
-
-
                 if (txtNegro.Text.Length >= 3 && txtBlanco.Text.Length >= 3 && txtBlanco.Text != txtNegro.Text)
                 {
-                    JugadoresSQL.CargarNuevaPartida(txtBlanco.Text, txtNegro.Text);
-                    Juego = new Form1(txtBlanco.Text.ToString(), txtNegro.Text.ToString());
+                    int id = JugadoresSQL.CargarNuevaPartida(txtBlanco.Text, txtNegro.Text);
+                    Juego = new Form1(id,txtBlanco.Text.ToString(), txtNegro.Text.ToString());
                     Juego.ShowDialog();
                     this.Close();
                 }
