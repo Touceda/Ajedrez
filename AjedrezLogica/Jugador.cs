@@ -29,8 +29,7 @@ namespace AjedrezLogica
             this.isblack = pIsblack;
             CrearFichas();      
         }
-       
-       
+
         public bool SeleccionarFicha(int x, int y)
         {
             foreach (var ficha in MisFichas)

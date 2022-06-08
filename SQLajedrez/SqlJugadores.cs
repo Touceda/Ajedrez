@@ -64,6 +64,22 @@ namespace SQLajedrez
             return id;
         }
 
+        public void FinDePartida(int idPartida)
+        {
+            List<SqlParameter> nombres = new List<SqlParameter>();
+            nombres.Add(Conexion.CrearParametro("@id", idPartida));
+
+            Conexion.Conectar();
+            using (SqlCommand comando = new SqlCommand()) //Creo la tabla id de partida con sus jugadores
+            {
+                comando.CommandType = System.Data.CommandType.StoredProcedure;
+                comando.Connection = Conexion.Conection;
+                comando.CommandText = "pr_Finalizarpartida";
+                comando.Parameters.AddRange(nombres.ToArray());
+                comando.ExecuteNonQuery();
+            }
+        }
+
         public void Buscarpartida() { }
 
     }

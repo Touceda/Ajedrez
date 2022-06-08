@@ -1,33 +1,64 @@
 using AjedrezLogica;
 using SQLajedrez;
+using System.Data;
 namespace AjedrezWindowsForms
 {
     public partial class Form1 : Form
     {
-        public Form1(int id, string jugBlanco, string jugNegro)
+        public Form1(int id, string jugBlanco, string jugNegro ,bool continuar)
         {
             InitializeComponent();
             Juego = new Juego(jugBlanco, jugNegro);
-            this.id = id;
+            this.idPartida = id;
+            this.PartidaEmpezada = continuar;
         }
 
-        int id = 0;
+        bool PartidaEmpezada;
+        int idPartida = 0;
         Juego Juego;
+        SqlJugadores JugadoresSQL;
+        SqlPartidaJugada PartidajugadaSQL;
         Bitmap [] ImagenesFichas;
         Bitmap CuadroBlanco = new Bitmap(Properties.Resources.CuadroBlanco, 100, 100);
         Bitmap CuadroNegro = new Bitmap(Properties.Resources.CuadroNegro, 100, 100);
         Brush pen = new SolidBrush(Color.SaddleBrown);
+        DataTable TablaDeMovimientos;
+        Queue<string> Movimientos = new Queue<string>();
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LBLid.Text = "ID De Partida: " + this.id.ToString();
+            LBLid.Text = "ID De Partida: " + this.idPartida.ToString();
             actualizarEstadoDeFicha = false;
             ImagenesFichas = CrearImagenes();
+            JugadoresSQL = new SqlJugadores();
+            PartidajugadaSQL = new SqlPartidaJugada();
             //Este codigo es para el refresh mas suave
             SetStyle(ControlStyles.UserPaint
               | ControlStyles.OptimizedDoubleBuffer
               | ControlStyles.AllPaintingInWmPaint, true);
+
+
+            if (PartidaEmpezada)
+            {
+                label1.Text = "Repeticion";
+
+                TablaDeMovimientos = PartidajugadaSQL.ObtenerMovimientos(this.idPartida);
+        
+                foreach (DataRow row in TablaDeMovimientos.Rows)
+                {
+                    this.Movimientos.Enqueue(row[0].ToString());
+                }
+
+                TimerMoverJuego.Enabled = true;
+            }
+            else
+            {
+                TimerGame.Enabled = true;
+            }
+
         }
+
+
 
         private Bitmap[] CrearImagenes()
         {
@@ -135,10 +166,14 @@ namespace AjedrezWindowsForms
 
         private void TimerGame_Tick(object sender, EventArgs e)
         {
+
             label1.Text = this.Juego.NombreJugador();
 
 
-            if (Juego.HayGanador != "no") { TimerGame.Enabled = false; MessageBox.Show(this.Juego.HayGanador.ToString() + "Fue El ganador de la partida"); }
+            if (Juego.HayGanador != "no") { 
+                TimerGame.Enabled = false;
+                JugadoresSQL.FinDePartida(idPartida);
+                MessageBox.Show(this.Juego.HayGanador.ToString() + "Fue El ganador de la partida"); }
 
 
             if (actualizarEstadoDeFicha)
@@ -154,6 +189,34 @@ namespace AjedrezWindowsForms
             Refresh();
         }
 
+        private void CargarJuego()
+        {
+         
+            if (this.Movimientos.Count > 0)
+            {
+                string movimiento = this.Movimientos.Dequeue().ToString();
+
+            }
+            else
+            {
+                MessageBox.Show("Continuar Partida");
+                TimerMoverJuego.Enabled = false;
+                TimerGame.Enabled = true;
+            }
+
+           
+
+
+        }
+
+        private void TimerMoverJuego_Tick(object sender, EventArgs e)
+        {
+            Refresh();
+            CargarJuego();
+        }
+
+
+      
         private void SeleccionarFicha()
         {
             actualizarEstadoDeFicha = false;
@@ -242,7 +305,7 @@ namespace AjedrezWindowsForms
         private void AñadirMovimiento()
         {
             string Mov = FichaSelect.ToString() + FichaMoved.ToString();
-            MovimientosSql.CargarMovimiento(this.id,this.movimiento,Mov);
+            MovimientosSql.CargarMovimiento(this.idPartida,this.movimiento,Mov);
             movimiento++;
         }
 

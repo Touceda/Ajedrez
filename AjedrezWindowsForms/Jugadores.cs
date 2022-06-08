@@ -35,7 +35,7 @@ namespace AjedrezWindowsForms
                 if (txtNegro.Text.Length >= 3 && txtBlanco.Text.Length >= 3 && txtBlanco.Text != txtNegro.Text)
                 {
                     int id = JugadoresSQL.CargarNuevaPartida(txtBlanco.Text, txtNegro.Text);
-                    Juego = new Form1(id,txtBlanco.Text.ToString(), txtNegro.Text.ToString());
+                    Juego = new Form1(id, txtBlanco.Text.ToString(), txtNegro.Text.ToString(), false) ;
                     Juego.ShowDialog();
                     this.Close();
                 }

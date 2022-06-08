@@ -40,8 +40,6 @@ namespace AjedrezLogica
             this.fichaSeleccionada = "0";
         }
 
-
-
         public bool ComprobarFichaWForms(int x, int y)
         {      
 

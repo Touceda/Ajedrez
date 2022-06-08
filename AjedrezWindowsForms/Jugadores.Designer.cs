@@ -90,9 +90,10 @@
             // Se
             // 
             this.Se.AutoSize = true;
-            this.Se.Location = new System.Drawing.Point(203, 9);
+            this.Se.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Se.Location = new System.Drawing.Point(84, 9);
             this.Se.Name = "Se";
-            this.Se.Size = new System.Drawing.Size(204, 15);
+            this.Se.Size = new System.Drawing.Size(462, 37);
             this.Se.TabIndex = 6;
             this.Se.Text = "Seleccionar Nombre de los Jugadores";
             // 

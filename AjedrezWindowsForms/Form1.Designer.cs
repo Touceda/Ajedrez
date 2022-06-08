@@ -32,11 +32,11 @@
             this.TimerGame = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.LBLid = new System.Windows.Forms.Label();
+            this.TimerMoverJuego = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // TimerGame
             // 
-            this.TimerGame.Enabled = true;
             this.TimerGame.Interval = 1;
             this.TimerGame.Tick += new System.EventHandler(this.TimerGame_Tick);
             // 
@@ -57,6 +57,11 @@
             this.LBLid.Size = new System.Drawing.Size(38, 15);
             this.LBLid.TabIndex = 2;
             this.LBLid.Text = "label2";
+            // 
+            // TimerMoverJuego
+            // 
+            this.TimerMoverJuego.Interval = 1500;
+            this.TimerMoverJuego.Tick += new System.EventHandler(this.TimerMoverJuego_Tick);
             // 
             // Form1
             // 
@@ -81,5 +86,6 @@
         private System.Windows.Forms.Timer TimerGame;
         private Label label1;
         private Label LBLid;
+        private System.Windows.Forms.Timer TimerMoverJuego;
     }
 }
