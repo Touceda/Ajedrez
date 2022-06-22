@@ -40,7 +40,7 @@ namespace AjedrezLogica
             this.fichaSeleccionada = "0";
         }
 
-        public bool ComprobarFichaWForms(int x, int y)
+        public bool ComprobarFichaWForms(int x, int y, bool repeticion)
         {      
 
             this.fichaSeleccionada = x.ToString() + y.ToString();
@@ -48,8 +48,11 @@ namespace AjedrezLogica
             if (this.WhiteTurn)
             {
                 if (JugadorBlanco.SeleccionarFicha(x, y))
-                {              
-                    JugadorBlanco.ActualizarFichaEnMovimiento(true);
+                {
+                    if (repeticion)
+                    {
+                        JugadorBlanco.ActualizarFichaEnMovimiento(true);
+                    }     
                     return true;
                 }
                 this.fichaSeleccionada = "0";
@@ -59,7 +62,10 @@ namespace AjedrezLogica
             {
                 if (JugadorNegro.SeleccionarFicha(x, y))
                 {
-                    JugadorNegro.ActualizarFichaEnMovimiento(true);
+                    if (repeticion)
+                    {
+                        JugadorNegro.ActualizarFichaEnMovimiento(true);
+                    }    
                     return true;
                 }
                 this.fichaSeleccionada = "0";

@@ -80,7 +80,45 @@ namespace SQLajedrez
             }
         }
 
-        public void Buscarpartida() { }
+        string JugBlancoName = "";
+        string JugNegroName = "";
+
+        public void BuscarJugadores(int idpartida) 
+        {
+            Conexion.Conectar();
+            DataTable jugadores = new DataTable();
+            using (SqlCommand comando = new SqlCommand()) //Creo la tabla id de partida con sus jugadores
+            {
+                comando.CommandType = System.Data.CommandType.StoredProcedure;
+                comando.Connection = Conexion.Conection;
+                comando.CommandText = "pr_ObtenerJugadores";
+                comando.Parameters.Add(Conexion.CrearParametro("@id",idpartida));
+                using (SqlDataAdapter DA = new SqlDataAdapter())
+                {
+                    DA.SelectCommand = comando;
+                    DA.Fill(jugadores);
+                }
+            }
+
+            foreach (DataRow fila in jugadores.Rows)
+            {
+                JugBlancoName = fila[0].ToString();
+                JugNegroName = fila[1].ToString();
+            }
+        }
+
+        bool Drop = true;
+        public string DropPlayername() //Primero me da el nombre del player blanco y despues del negro 
+        {
+            string player = JugNegroName;
+
+            if (Drop)
+            {
+                player = JugBlancoName;
+                Drop = false;
+            }
+            return player;
+        }
 
     }
 }

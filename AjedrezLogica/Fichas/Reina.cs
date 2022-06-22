@@ -27,7 +27,7 @@ namespace AjedrezLogica
             int posiblex = this.PosX;
             int posibley = this.PosY;
 
-            string[] Movimientos = new string[27];
+            string[] Movimientos = new string[28];
             int indexMov = 0;
 
 
@@ -112,7 +112,7 @@ namespace AjedrezLogica
 
 
 
-            while (indexMov < 27)
+            while (indexMov < 28)
             {
                 Movimientos[indexMov] = "No Mov";
                 indexMov++;

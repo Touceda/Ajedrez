@@ -32,13 +32,15 @@ namespace AjedrezWindowsForms
         private void btbContinuarPartida_Click(object sender, EventArgs e)
         {
             SqlPartidaJugada PartidaEmpezada = new SqlPartidaJugada();
+            SqlJugadores JugadoresPartidaEmpezada = new SqlJugadores();
             try
             {
                 int x = int.Parse(Interaction.InputBox("Cual es su ID de partida?", "Titulo"));
 
                 if (PartidaEmpezada.ValidarPartidaExistente(x))
                 {
-                    Juego = new Form1(x, "a", "b", true);
+                    JugadoresPartidaEmpezada.BuscarJugadores(x);
+                    Juego = new Form1(x, JugadoresPartidaEmpezada.DropPlayername(), JugadoresPartidaEmpezada.DropPlayername(), true); 
                     Juego.ShowDialog();
                     this.Close();
                 }

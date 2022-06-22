@@ -50,10 +50,12 @@ namespace AjedrezWindowsForms
                 }
 
                 TimerMoverJuego.Enabled = true;
+                TimerGame.Enabled = false;
             }
             else
             {
                 TimerGame.Enabled = true;
+                TimerMoverJuego.Enabled = false;
             }
 
         }
@@ -170,10 +172,12 @@ namespace AjedrezWindowsForms
             label1.Text = this.Juego.NombreJugador();
 
 
-            if (Juego.HayGanador != "no") { 
+            if (Juego.HayGanador != "no")
+            {
                 TimerGame.Enabled = false;
                 JugadoresSQL.FinDePartida(idPartida);
-                MessageBox.Show(this.Juego.HayGanador.ToString() + "Fue El ganador de la partida"); }
+                MessageBox.Show(this.Juego.HayGanador.ToString() + "Fue El ganador de la partida");
+            }
 
 
             if (actualizarEstadoDeFicha)
@@ -194,14 +198,32 @@ namespace AjedrezWindowsForms
          
             if (this.Movimientos.Count > 0)
             {
+                
                 string movimiento = this.Movimientos.Dequeue().ToString();
+                string x = movimiento[0].ToString();
+                string y = movimiento[1].ToString();
+                string a = movimiento[2].ToString();
+                string b = movimiento[3].ToString();
 
+
+                FichaSelect = x + y;
+                this.Juego.ComprobarFichaWForms(int.Parse(x), int.Parse(y),false);
+
+                FichaMoved = a + b;
+                if (this.Juego.ComprobarMovimientoWforms(int.Parse(a), int.Parse(b)))
+                {
+                    this.Juego.CambioDeTruno();
+                    Refresh();
+                }
             }
             else
             {
-                MessageBox.Show("Continuar Partida");
+                PartidaEmpezada = false;
                 TimerMoverJuego.Enabled = false;
                 TimerGame.Enabled = true;
+                MessageBox.Show("Continuar Partida");
+                
+            
             }
 
            
@@ -211,8 +233,7 @@ namespace AjedrezWindowsForms
 
         private void TimerMoverJuego_Tick(object sender, EventArgs e)
         {
-            Refresh();
-            CargarJuego();
+            CargarJuego();       
         }
 
 
@@ -225,7 +246,7 @@ namespace AjedrezWindowsForms
             int y = BuscarPos(this.YmouseSelect);
             FichaSelect = x.ToString() + y.ToString();
 
-            if (this.Juego.ComprobarFichaWForms(x, y))
+            if (this.Juego.ComprobarFichaWForms(x, y,true))
             {
                 fichaseleccionadaestado = 1;
             }
@@ -246,7 +267,7 @@ namespace AjedrezWindowsForms
 
             if (this.Juego.ComprobarMovimientoWforms(x, y))
             {
-                AñadirMovimiento();
+                AñadirMovimientoSQL();
                 this.Juego.CambioDeTruno();
             }
             
@@ -302,7 +323,7 @@ namespace AjedrezWindowsForms
         string FichaMoved = "";
 
         SqlMovimientos MovimientosSql = new SqlMovimientos();
-        private void AñadirMovimiento()
+        private void AñadirMovimientoSQL()
         {
             string Mov = FichaSelect.ToString() + FichaMoved.ToString();
             MovimientosSql.CargarMovimiento(this.idPartida,this.movimiento,Mov);

@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btbNewGame = new System.Windows.Forms.Button();
             this.btbContinuarPartida = new System.Windows.Forms.Button();
-            this.btbVerPartida = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -64,22 +63,11 @@
             this.btbContinuarPartida.UseVisualStyleBackColor = true;
             this.btbContinuarPartida.Click += new System.EventHandler(this.btbContinuarPartida_Click);
             // 
-            // btbVerPartida
-            // 
-            this.btbVerPartida.Location = new System.Drawing.Point(154, 324);
-            this.btbVerPartida.Name = "btbVerPartida";
-            this.btbVerPartida.Size = new System.Drawing.Size(466, 78);
-            this.btbVerPartida.TabIndex = 3;
-            this.btbVerPartida.Text = "Revisar Partida";
-            this.btbVerPartida.UseVisualStyleBackColor = true;
-            this.btbVerPartida.Click += new System.EventHandler(this.btbVerPartida_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btbVerPartida);
             this.Controls.Add(this.btbContinuarPartida);
             this.Controls.Add(this.btbNewGame);
             this.Controls.Add(this.label1);
@@ -96,6 +84,5 @@
         private Label label1;
         private Button btbNewGame;
         private Button btbContinuarPartida;
-        private Button btbVerPartida;
     }
 }
